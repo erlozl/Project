@@ -1,5 +1,8 @@
-package test.ex04;
+package test.ex06_2;
 
+// 벽에 충돌 감지
+
+// 점프
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,9 +27,12 @@ public class BubbleFrame extends JFrame {
         // 생성하는 메서드
         player = new Player();
 
-        backgroundMap = new JLabel(new ImageIcon("C:\\workspace\\java_lab\\bubble\\src\\image/backgroundMap.png"));
+        backgroundMap = new JLabel(
+                new ImageIcon("C:\\workspace\\java_lab\\bubble\\src\\image/backgroundMapService.png"));
         setContentPane(backgroundMap);
         add(player);
+
+        new Thread(new BackgroundPlayerService(player)).start();
 
     }
 
@@ -37,18 +43,29 @@ public class BubbleFrame extends JFrame {
             public void keyPressed(KeyEvent e) {
                 // System.out.println(e.getKeyCode());
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    System.out.println("오른쪽 키보드 클릭됨");
+                    // System.out.println("오른쪽 키보드 클릭됨");
                     // boolean은 is가 붙음
                     if (!player.isRight()) {
                         // isRight() = false 그걸 !로 하면 true로 바뀌니까
                         player.right();
-                    }
-                    player.right();
+                    } // 중복 if문 안에 내용을 이렇게 제어를 안해주면
+                      // 계속 연속적으로 실행이 될것임
+                      // player.right();
+
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     if (!player.isLeft()) {
                         player.left();
                     }
-                    player.left();
+                    // player.left();
+                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    System.out.println("UP");
+                    // UP이라는 메세지가 출력되는지 먼저 확인
+                    if (!player.isUp() && !player.isDown()) {
+                        player.up();
+                        // 점프하고 있는 상태가 아닐 때 UP
+                    }
+                    // player.up();
+                    // UP이라는 메시지가 연속으로 클릭되는 걸 막아야 함
                 }
             }
 
@@ -57,6 +74,8 @@ public class BubbleFrame extends JFrame {
                     player.setRight(false);
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     player.setLeft(false);
+                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    player.setUp(false);
                 }
             }
         });

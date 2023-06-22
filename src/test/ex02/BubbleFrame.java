@@ -29,8 +29,8 @@ public class BubbleFrame extends JFrame {
 
         setSize(1000, 640);
         setTitle("bubble");
-        setLocationRelativeTo(null);
-        setLayout(null);
+        setLocationRelativeTo(null); // 항상 화면 중앙
+        setLayout(null); // 절대 값
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
