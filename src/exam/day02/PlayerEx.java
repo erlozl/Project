@@ -13,6 +13,12 @@ public class PlayerEx extends JLabel {
     public PlayerEx() {
         playerR = new ImageIcon("C:\\workspace\\java_lab\\bubble\\src\\image/playerR.png");
         playerL = new ImageIcon("C:\\workspace\\java_lab\\bubble\\src\\image/playerL.png");
+        // player의 초기값 이미지 지정
+
+        x = 55;
+        y = 535;
+        // 아이콘이 위치한 좌표를 설정
+
     }
 
 }

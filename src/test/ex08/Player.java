@@ -1,8 +1,14 @@
-package test.ex06;
+package test.ex08;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+// jvm이 실행될 때 깃발을 준다
 // class player -> new 가능한 애들 !! 게임에 존재할 수 있음
 // 추상메서드를 가질 수 없다
 public class Player extends JLabel {
@@ -17,8 +23,12 @@ public class Player extends JLabel {
     private boolean down;
 
     // 플레이어의 스피드
-    private final int SPEED = 3; // x 축
+    private final int SPEED = 4; // x 축
     private final int JUMPSPEED = 5; // y축
+
+    // 벽에 충돌한 상태
+    private boolean leftWallCrash;
+    private boolean rightWallCrash;
 
     private ImageIcon playerR, playerL;
 
@@ -53,6 +63,9 @@ public class Player extends JLabel {
         setVisible(true);
     }
 
+    // 오른쪽으로 가고
+    // 있는 와중에 바닥이-2면 떨어진다
+
     public void right() {
         right = true;
         // 메서드가 단 한번만 실행되면 어떨까? - 스레드 동작시키기
@@ -84,6 +97,7 @@ public class Player extends JLabel {
         new Thread(() -> {
             // player의 상태값이 true이기 때문에 넣기
             while (left) {
+
                 setIcon(playerL);
                 x = x - SPEED;
                 setLocation(x, y);
@@ -101,7 +115,6 @@ public class Player extends JLabel {
                 // 클릭하는 동안 이벤트 루프에 등록부터 함 (등록->실행)
                 // 이벤트 루프 등록되는 거 - 시간이 오래 걸리는 거
                 // 이벤트 루프가 소비되는 시점 (메인 스레드가 안 바쁠 때)
-
             }
         }).start(); // 새로운 스레드
     }
@@ -118,7 +131,7 @@ public class Player extends JLabel {
             // 움직이는 거에 따라 for문에 횟수가 달라짐
             // for문 횟수를 올리고 점프 횟수를 작게 하면 제일 부드러워짐
 
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 35; i++) {
                 // 점프값 30 * 5 150이 올라가는 거임
                 y = y - JUMPSPEED;
                 // for문을 1로 하고 점프를 정해놓으면 순간이동함
@@ -126,7 +139,7 @@ public class Player extends JLabel {
                 // 점프 값이 클수록 멀어짐
                 setLocation(x, y);
                 try {
-                    Thread.sleep(5); // 0.01초
+                    Thread.sleep(10); // 0.01초
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -140,16 +153,17 @@ public class Player extends JLabel {
     // 아래로 갈수록 Y값이 증가
 
     public void down() {
+        // 스레드 실 제어하는 게 true false
         down = true;
         new Thread(() -> {
-            for (int i = 0; i < 30; i++) {
+            while (down) {
                 // 점프값
                 y = y + JUMPSPEED; // 이런 상수값은 고정하자(안전하게 상수화)
                 // 숫자로 해버리면 프로그램 망가짐
                 // 이 숫자는 움직이는 값(스피드)
                 setLocation(x, y);
                 try {
-                    Thread.sleep(3);
+                    Thread.sleep(10);
                     // 3만큼 잔다
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -157,71 +171,6 @@ public class Player extends JLabel {
             }
             down = false;
         }).start(); // 새로운 스레드
-    }
-    //////////// getter, setter
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public ImageIcon getPlayerR() {
-        return playerR;
-    }
-
-    public void setPlayerR(ImageIcon playerR) {
-        this.playerR = playerR;
-    }
-
-    public ImageIcon getPlayerL() {
-        return playerL;
-    }
-
-    public void setPlayerL(ImageIcon playerL) {
-        this.playerL = playerL;
     }
 
 }

@@ -1,8 +1,14 @@
-package test.ex06;
+package test.ex07;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+// jvm이 실행될 때 깃발을 준다
 // class player -> new 가능한 애들 !! 게임에 존재할 수 있음
 // 추상메서드를 가질 수 없다
 public class Player extends JLabel {
@@ -19,6 +25,10 @@ public class Player extends JLabel {
     // 플레이어의 스피드
     private final int SPEED = 3; // x 축
     private final int JUMPSPEED = 5; // y축
+
+    // 벽에 충돌한 상태
+    private boolean leftWallCrash;
+    private boolean rightWallCrash;
 
     private ImageIcon playerR, playerL;
 
@@ -101,7 +111,6 @@ public class Player extends JLabel {
                 // 클릭하는 동안 이벤트 루프에 등록부터 함 (등록->실행)
                 // 이벤트 루프 등록되는 거 - 시간이 오래 걸리는 거
                 // 이벤트 루프가 소비되는 시점 (메인 스레드가 안 바쁠 때)
-
             }
         }).start(); // 새로운 스레드
     }
@@ -157,71 +166,6 @@ public class Player extends JLabel {
             }
             down = false;
         }).start(); // 새로운 스레드
-    }
-    //////////// getter, setter
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public ImageIcon getPlayerR() {
-        return playerR;
-    }
-
-    public void setPlayerR(ImageIcon playerR) {
-        this.playerR = playerR;
-    }
-
-    public ImageIcon getPlayerL() {
-        return playerL;
-    }
-
-    public void setPlayerL(ImageIcon playerL) {
-        this.playerL = playerL;
     }
 
 }

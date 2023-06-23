@@ -1,4 +1,4 @@
-package test.ex06;
+package test.ex08;
 // 외부에서 계속 관찰하는 게 필요하다  == 리스너가 필요하다
 
 // 벽에 충돌 감지
@@ -42,7 +42,8 @@ public class BubbleFrame extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     System.out.println("오른쪽 키보드 클릭됨");
                     // boolean은 is가 붙음
-                    if (!player.isRight()) {
+
+                    if (!player.isRight() && !player.isRightWallCrash()) {
                         // isRight() = false 그걸 !로 하면 true로 바뀌니까
                         player.right();
                     } // 중복 if문 안에 내용을 이렇게 제어를 안해주면
@@ -50,7 +51,9 @@ public class BubbleFrame extends JFrame {
                       // player.right();
 
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    if (!player.isLeft()) {
+                    // 너 지금 왼쪽 방향 보고 있으면 안되고
+                    // 너 지금 왼쪽 벽에 부딪히면 안되고
+                    if (!player.isLeft() && !player.isLeftWallCrash()) {
                         player.left();
                     }
                     // player.left();
